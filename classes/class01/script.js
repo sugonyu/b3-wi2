@@ -30,3 +30,9 @@ function addMemo() {
 }
 
 memoBtn.addEventListener("click", addMemo);
+
+memoInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        addMemo();
+    }
+});

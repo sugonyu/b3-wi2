@@ -18,28 +18,38 @@
 
     <!-- <script src="script.js"></script> -->
     <script>
-        const memoInput = document.getElementById("memoInput")
-        const memoBtn = document.getElementById("memoBtn")
-        const memoLst = document.getElementById("memoLst")
+        const memoInput = document.getElementById("memoInput");
+        const memoBtn = document.getElementById("memoBtn");
+        const memoLst = document.getElementById("memoLst");
 
-        memoBtn.addEventListener("click", () => {
-            const str = memoInput.value;
+        function getMemoText() {
+            return memoInput.value.trim();
+        }
 
-            if (str.trim() === "") {
+        function createMemoItem(text) {
+            const li = document.createElement("li");
+            li.textContent = text;
+            return li;
+        }
+
+        function resetInput() {
+            memoInput.value = "";
+            memoInput.focus();
+        }
+
+        function addMemo() {
+            const memoText = getMemoText();
+
+            if (memoText === "") {
                 return;
             }
 
-            const li = document.createElement("li");
-            li.textContent = str;
-            memoLst.appendChild(li);
+            const memoItem = createMemoItem(memoText);
+            memoLst.appendChild(memoItem);
+            resetInput();
+        }
 
-            memoInput.value = ""
-            memoInput.focus();
-
-            // alert(str);
-        });
-
-
+        memoBtn.addEventListener("click", addMemo);
     </script>
 </body>
 

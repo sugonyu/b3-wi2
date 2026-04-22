@@ -1,5 +1,6 @@
 const memoInput = document.getElementById("memoInput");
 const memoBtn = document.getElementById("memoBtn");
+const memoCount = document.getElementById("memoCount");
 const memoLst = document.getElementById("memoLst");
 
 function getMemoText() {
@@ -17,6 +18,10 @@ function resetInput() {
     memoInput.focus();
 }
 
+function updateMemoCount() {
+    memoCount.textContent = "Total memos: " + memoLst.children.length;
+}
+
 function addMemo() {
     const memoText = getMemoText();
 
@@ -26,6 +31,7 @@ function addMemo() {
 
     const memoItem = createMemoItem(memoText);
     memoLst.appendChild(memoItem);
+    updateMemoCount();
     resetInput();
 }
 
@@ -36,3 +42,5 @@ memoInput.addEventListener("keydown", function (event) {
         addMemo();
     }
 });
+
+updateMemoCount();

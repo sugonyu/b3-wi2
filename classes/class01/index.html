@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 01</title>
+</head>
+
+<body>
+    <h1>Class 01</h1>
+
+    <div>
+        <input type="text" id="memoInput">
+        <button id="memoBtn">Add Memo</button>
+        <ul id="memoLst"></ul>
+    </div>
+
+    <!-- <script src="script.js"></script> -->
+    <script>
+        const memoInput = document.getElementById("memoInput")
+        const memoBtn = document.getElementById("memoBtn")
+        const memoLst = document.getElementById("memoLst")
+
+        memoBtn.addEventListener("click", () => {
+            const str = memoInput.value;
+
+            if (str.trim() === "") {
+                return;
+            }
+
+            const li = document.createElement("li");
+            li.textContent = str;
+            memoLst.appendChild(li);
+
+            memoInput.value = ""
+            memoInput.focus();
+
+            // alert(str);
+        });
+
+
+    </script>
+</body>
+
+</html>

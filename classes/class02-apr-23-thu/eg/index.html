@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p class="description">DOM is fun!</p>
+    <input type="text" id="name-input" placeholder="Enter your name">
+    <button id="my-button">Click</button>
+    <p id="output"></p>
+    <ul id="topic-list"></ul>
+
+    <script>
+        // 1️⃣ 요소 가져오기 (Selecting Elements)
+        const button = document.getElementById('my-button');
+        const nameInput = document.getElementById('name-input');
+        const output = document.getElementById('output');
+        const topicList = document.getElementById('topic-list');
+
+        // 2️⃣ 버튼 클릭 이벤트 (콜백 + 클로저 활용!)
+        const topics = ['HTML', 'CSS', 'JavaScript', 'DOM'];
+        let clickCount = 0;  // 👈 클로저가 이걸 기억해요!
+
+        button.addEventListener('click', function () {
+            clickCount++;  // 외부 변수를 캡처한 클로저!
+
+            // output 텍스트 변경
+            const name = nameInput.value || 'stranger';
+            output.textContent = `👋 Hello, ${name}! (Click #${clickCount})`;
+
+            // ul에 li 추가
+            const topic = topics[(clickCount - 1) % topics.length];
+            const li = document.createElement('li');
+            li.textContent = `📌 ${topic}`;
+            topicList.appendChild(li);
+        });
+    </script>
+</body>
+
+</html>

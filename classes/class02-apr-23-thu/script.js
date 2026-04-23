@@ -22,10 +22,12 @@ for (let i = 0; i < 3; i++) {
 
 //------------------ DOM -----------------------
 
+const foo = document.getElementsByClassName("foo")
 const title = document.getElementById("title");
 // title.textContent = "bar";
 const btn1 = document.getElementById("btn1");
 const btn2 = document.getElementById("btn2");
+const input = document.getElementById("input")
 
 btn1.addEventListener("click", ()=> {
     title.textContent = new Date().toDateString()
@@ -33,4 +35,9 @@ btn1.addEventListener("click", ()=> {
 
 btn2.addEventListener("click", () => {
     title.textContent = "";
+})
+
+input.addEventListener("input", () => {
+    pr("Typing...")
+    // foo.textContent = input.value
 })

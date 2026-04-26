@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>memo-v0.9</title>
+</head>
+
+<body>
+    <h1>memo-v0.9</h1>
+    <input type="text" id="memoInput" placeholder="Write a memo" />
+    <button id="addMemoBtn">Add Memo</button>
+    <button id="refreshBtn">🔄 Hard Refresh</button>
+    <ul id="memoList"></ul>
+
+    <script>
+        // 1️⃣ DOM 요소 선택
+        const memoInput = document.getElementById("memoInput");
+        const addMemoBtn = document.getElementById("addMemoBtn");
+        const refreshBtn = document.getElementById("refreshBtn");
+        const memoList = document.getElementById("memoList");
+
+        // 2️⃣ 상태 변수
+        let memos = [];
+
+        // 3️⃣ localStorage에서 불러오기 (안전 처리)
+        try {
+            const saved = localStorage.getItem("memos");
+            if (saved) memos = JSON.parse(saved);
+        } catch (e) {
+            memos = [];
+        }
+
+        // 4️⃣ localStorage 저장
+        function saveMemos() {
+            localStorage.setItem("memos", JSON.stringify(memos));
+        }
+
+        // 5️⃣ 메모 목록 렌더링
+        function renderMemos() {
+            memoList.innerHTML = "";
+
+            memos.forEach((memo, index) => {
+                const li = document.createElement("li");
+
+                const span = document.createElement("span");
+                span.textContent = memo;
+
+                // ✏️ Edit 버튼 (prompt 기반)
+                const editBtn = document.createElement("button");
+                editBtn.textContent = "✏️";
+                editBtn.addEventListener("click", () => {
+                    const newText = prompt("Edit Memo", memo);
+                    if (newText) {
+                        memos[index] = newText;
+                        saveMemos();
+                        renderMemos();
+                    }
+                });
+
+                // ❌ Delete 버튼
+                const delBtn = document.createElement("button");
+                delBtn.textContent = "❌";
+                delBtn.addEventListener("click", () => {
+                    memos.splice(index, 1);
+                    saveMemos();
+                    renderMemos();
+                });
+
+                li.appendChild(span);
+                li.appendChild(editBtn);
+                li.appendChild(delBtn);
+                memoList.appendChild(li);
+            });
+        }
+
+        // 6️⃣ 메모 추가 함수
+        function addMemo() {
+            const memoText = memoInput.value.trim();
+            if (!memoText) return;
+
+            memos.push(memoText);
+            saveMemos();
+            renderMemos();
+            memoInput.value = "";
+            memoInput.focus();
+        }
+
+        // 7️⃣ 이벤트 연결
+        addMemoBtn.addEventListener("click", addMemo);
+        memoInput.addEventListener("keydown", e => {
+            if (e.key === "Enter") addMemo();
+        });
+        refreshBtn.addEventListener("click", () => location.reload(true));
+
+        // 8️⃣ 최초 렌더링
+        renderMemos();
+    </script>
+</body>
+
+</html>
